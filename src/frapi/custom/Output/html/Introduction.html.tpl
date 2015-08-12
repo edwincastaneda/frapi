@@ -65,12 +65,10 @@ $mimetypes = $grouped;
                 padding-left: 10%;
                 padding-right: 10%;
             }
-
             h2 {
                 float: left;
                 margin-top: 1.5em;
             }
-
             /**
             * HTML (admin inline) Documentation
             *
@@ -78,7 +76,6 @@ $mimetypes = $grouped;
             h3.desc {
                 padding-top: 20px;
             }
-
             p.description, div.description {
                 padding: 5px;
                 padding-left:10px;
@@ -86,7 +83,6 @@ $mimetypes = $grouped;
                 font-size: 16px;
                 color: #000;
             }
-
             p.error-description, div.error-description {
                 padding: 5px;
                 padding-left:10px;
@@ -94,21 +90,17 @@ $mimetypes = $grouped;
                 font-size: 16px;
                 color: #000;
             }
-
             .doc-subdata{
                 margin-left: 2em;
             }
-
             .doc-subdata h2 {
                 float: none;
             }
-
             .action, .error {
                 background: #e7f0f7;
                 width: 100%;
                 position: relative;
             }
-
             .action .top, .error .top {
                 position: relative;
                 float: left;
@@ -116,7 +108,6 @@ $mimetypes = $grouped;
                 height: 30px;
                 margin-bottom:25px;
             }
-
             .action .top .name, .error .top .name, .mimetype .top .name, .endpoint .top .name {
                 width: 20%;
                 float: left;
@@ -132,22 +123,17 @@ $mimetypes = $grouped;
                 cursor: pointer;
                 clear: left;
             }
-
             .error .top .name {
                 background: #a41e22;
             }
-
             .mimetype .top .name {
                 background: #7d1fff;
                 cursor: auto;
             }
-
             .endpoint .top .name {
                 background: #A6A6A6;
                 cursor: auto;
             }
-
-
             .action .top .route, .error .top .route, .mimetype .top .route, .endpoint .top .route  {
                 width: 78%;
                 height: 30px;
@@ -163,26 +149,22 @@ $mimetypes = $grouped;
                 -moz-border-radius: 4px 0 0 4px;
                 border-radius: 0 4px 4px 0;
             }
-
             .error .top .route {
                 background: #f5e8e8;
                 border: 1px solid #e8c6c7;
             }
-
             .mimetype .top .route {
                 background: #e2cfff;
                 border: 1px solid #7d1fff;
                 margin-bottom: 1em;
                 cursor: auto;
             }
-
             .endpoint .top .route {
                 background: #e3e3e3;
                 border: 1px solid #A6A6A6;
                 margin-bottom: 1em;
                 cursor: auto;
             }
-
             .action .stub{
                 background: #e7f0f7;
                 display: none;
@@ -194,16 +176,13 @@ $mimetypes = $grouped;
                 margin-top: -15px;
                 margin-bottom:25px;
             }
-
             .root .name {
                 background-color: green !important;
             }
-
             .root .route, .root .stub {
                 background-color: #ccffcc !important;
                 border-color: #99ff99 !important;
             }
-
             .error .stub {
                 background: #f5e8e8;
                 display: none;
@@ -215,47 +194,37 @@ $mimetypes = $grouped;
                 width: 98%;
                 margin-bottom:25px;
             }
-
             .action .stub .doc-subdata {
                 color: #0F6AB4;
             }
-
             .error .stub .doc-subdata {
                 color: #a41e22;
             }
-
             .doc-table tr th.param-name, .doc-table tr td.param-name {
                 width: 100px;
                 padding: 10px;
                 text-align: center;
             }
-
             .action .stub .doc-subdata .doc-table tr th{
                 border-bottom: 2px solid #0F6AB4;
             }
-
             .action .stub .doc-subdata .doc-table tr td {
                 border-bottom: 1px solid #0F6AB4;
             }
-
             .error .stub .doc-subdata .doc-table tr td {
                 border-bottom: 1px solid #a41e22;
             }
-
             .error .stub .doc-subdata .doc-table tr th{
                 border-bottom: 2px solid #a41e22;
             }
-
             .doc-table tr th.param-required, .doc-table tr td.param-required {
                 width: 70%;
                 padding: 10px;
                 text-align: center;
             }
-
             .doc-table tr td.param-name {
                 color: #000;
             }
-
             blockquote {
                 padding-left: 1em;
                 border-left: 3px solid #0F6AB4;
@@ -275,15 +244,17 @@ $mimetypes = $grouped;
                 <span class="route"><?php echo '<a href="' .$url. '">' .$url. '</a>'; ?></span>
             </div>
         </div>
-
+        <h2>Actions</h2>
         <?php
         if (count($actions)) {
             foreach ($actions as $action) {
                 if ($action['enabled'] != 1) {
                     continue;
                 }
-
+                               
                 $action['route'] = preg_replace('@:([^/]+)@', '<strong>:$1</strong>', $action['route']);
+                
+                if ($action['route'] != '/') {
                 ?>
                 <div class="action <?php if ($action['route'] == '/') { echo 'root'; } ?>" hash="<?php echo $action['hash']; ?>">
                     <div class="top">
@@ -317,18 +288,19 @@ $mimetypes = $grouped;
                                                 </tr>
                                                 <?php
                                             }
-                                        }
+                                        } else {
                                         ?>
                                         <tr>
                                             <td><?php echo $param['name']; ?></td>
                                                 <td class="param-required">
                                                     <?php
-                                                        echo isset($subparam['required']) && $subparam['required'] == '1'
+                                                        echo isset($param['required']) && $param['required'] == '1'
                                                         ? '<strong>&#10003;</strong>' : '<strong>&#10007;</strong>'
                                                     ?>
                                                 </td>
                                         </tr>
                                         <?php
+                                        }
                                     }
                                     ?>
                                 </table>
@@ -349,8 +321,6 @@ $mimetypes = $grouped;
                     </div>
                 </div>
                 <?php
-                if ($action['route'] == '/') {
-                    echo '<h2>Actions</h2>';
                 }
             }
         }
@@ -413,17 +383,14 @@ $mimetypes = $grouped;
                     var hash = $(this).attr('hash');
                     $('#action-' + hash).slideToggle();
                 });
-
                 $('.action .route').live('click', function() {
                     var hash = $(this).parent().find('.name').attr('hash');
                     $('#action-' + hash).slideToggle();
                 });
-
                 $('.error .name').live('click', function() {
                     var hash = $(this).attr('hash');
                     $('#error-' + hash).slideToggle();
                 });
-
                 $('.error .route').live('click', function() {
                     var hash = $(this).parent().find('.name').attr('hash');
                     $('#error-' + hash).slideToggle();

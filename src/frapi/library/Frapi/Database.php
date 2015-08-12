@@ -1,5 +1,8 @@
 <?php
-class Frapi_Database_Exception extends Frapi_Exception {}
+
+class Frapi_Database_Exception extends Frapi_Exception {
+    
+}
 
 /**
  * Database
@@ -21,8 +24,8 @@ class Frapi_Database_Exception extends Frapi_Exception {}
  * @license   New BSD
  * @package   frapi
  */
-class Frapi_Database extends PDO
-{
+class Frapi_Database extends PDO {
+
     /**
      * Just the instance of the PDO connection.
      *
@@ -41,8 +44,7 @@ class Frapi_Database extends PDO
      *
      * @return PDO A new PDO object or an existing PDO object
      */
-    protected static function factory($name = 'default')
-    {
+    protected static function factory($name = 'default') {
         if (!isset(self::$instance[$name])) {
             $configs = Frapi_Internal::getCachedDbConfig();
 
@@ -51,17 +53,55 @@ class Frapi_Database extends PDO
             // I iz not happy with this. We already have a switch
             // for the dsn in the "buildDsn" method...
             if (isset($configs['db_engine']) &&
-                in_array($configs['db_engine'], array('pgsql')))
-            {
+                    in_array($configs['db_engine'], array('pgsql'))) {
                 // DSN that have the user/pass implicitely defined.
                 self::$instance[$name] = new PDO($dsn);
             } else {
                 // Other dsns like mysql, mssql, etc.
                 self::$instance[$name] = new PDO(
-                    $dsn,
-                    $configs['db_username'],
-                    $configs['db_password'],
-                    array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'utf8\'')
+                        $dsn, $configs['db_username'], $configs['db_password'], array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'utf8\'')
+                );
+            }
+        }
+
+        return self::$instance[$name];
+    }
+
+    public static function buildDsnManual($db_engine, $db_database, $db_hostname, $db_username, $db_password) {
+        $dsn = false;
+
+        switch ($db_engine) {
+            case 'mysql':
+                $dsn = 'mysql:dbname=' . $db_database .
+                        ';host=' . $db_hostname;
+                break;
+            case 'pgsql':
+                $dsn = 'pgsql:host=' . $db_hostname .
+                        ';dbname=' . $db_database .
+                        ';user=' . $db_username .
+                        ';password=' . $db_password;
+                break;
+            case 'mssql':
+                $dsn = 'sqlsrv:Server=' . $db_hostname .
+                        ';Database=' . $db_database;
+                break;
+        }
+
+        return $dsn;
+    }
+
+    protected static function manual($db_engine, $db_database, $db_hostname, $db_username, $db_password) {
+        $name = 'manual';
+        if (!isset(self::$instance[$name])) {
+            $dsn = self::buildDsnManual($db_engine, $db_database, $db_hostname, $db_username, $db_password);
+            if (isset($db_engine) &&
+                    in_array($db_engine, array('pgsql'))) {
+                // DSN that have the user/pass implicitely defined.
+                self::$instance[$name] = new PDO($dsn);
+            } else {
+                // Other dsns like mysql, mssql, etc.
+                self::$instance[$name] = new PDO(
+                        $dsn, $db_username, $db_password, array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'utf8\'')
                 );
             }
         }
@@ -79,33 +119,29 @@ class Frapi_Database extends PDO
      * @throw  Frapi_Error
      * @return string      The Datasource for the selected database engine.
      */
-    public static function buildDsn(array $configs)
-    {
+    public static function buildDsn(array $configs) {
         $dsn = false;
 
         if (!isset($configs['db_engine'])) {
             throw new Frapi_Error(
-                 'NO_DATABASE_DEFINED',
-                 'No Database is defined in the configuration',
-                 500,
-                 'Internal Server Error'
+            'NO_DATABASE_DEFINED', 'No Database is defined in the configuration', 500, 'Internal Server Error'
             );
         }
 
         switch ($configs['db_engine']) {
             case 'mysql':
                 $dsn = 'mysql:dbname=' . $configs['db_database'] .
-                       ';host='.$configs['db_hostname'];
+                        ';host=' . $configs['db_hostname'];
                 break;
             case 'pgsql':
                 $dsn = 'pgsql:host=' . $configs['db_hostname'] .
-                       ';dbname=' . $configs['db_database'] .
-                       ';user=' . $configs['db_username'] .
-                       ';password=' . $configs['db_password'];
+                        ';dbname=' . $configs['db_database'] .
+                        ';user=' . $configs['db_username'] .
+                        ';password=' . $configs['db_password'];
                 break;
             case 'mssql':
                 $dsn = 'sqlsrv:Server=' . $configs['db_hostname'] .
-                       ';Database=' . $configs['db_database'];
+                        ';Database=' . $configs['db_database'];
                 break;
         }
 
@@ -124,18 +160,24 @@ class Frapi_Database extends PDO
      *
      * @return mixed PDO* An object of type PDO
      */
-    public static function getInstance($name = 'default')
-    {
+    public static function getInstance($name = 'default') {
         return self::factory($name);
     }
 
-    public static function getMasterInstance()
-    {
+    public static function getInstanceManual($db_engine, $db_database, $db_hostname, $db_username, $db_password) {
+        return self::manual($db_engine, $db_database, $db_hostname, $db_username, $db_password);
+    }
+    
+    public static function getGLOBAL_ID() {
+        return self::manual("mysql", "registro_id", "minisitiosdb.c4cbjqvfkgm3.us-west-2.rds.amazonaws.com", "reg22", "admyver22");
+    }
+
+    public static function getMasterInstance() {
         throw new Frapi_Database_Exception('Method not yet implemented');
     }
 
-    public static function getSlavesInstance()
-    {
+    public static function getSlavesInstance() {
         throw new Frapi_Database_Exception('Method not yet implemented');
     }
+
 }

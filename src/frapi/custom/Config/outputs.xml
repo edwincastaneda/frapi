@@ -3,28 +3,28 @@
  <outputs>
   <output>
    <name>CLI</name>
-   <enabled>1</enabled>
+   <enabled>0</enabled>
    <default>0</default>
   </output>
   <output>
    <name>PHP</name>
-   <enabled>1</enabled>
+   <enabled>0</enabled>
    <default>0</default>
   </output>
   <output>
    <name>XML</name>
-   <enabled>1</enabled>
+   <enabled>0</enabled>
    <default>0</default>
   </output>
   <output>
    <name>JSON</name>
    <enabled>1</enabled>
-   <default>1</default>
+   <default>0</default>
   </output>
   <output>
    <name>PRINTR</name>
    <enabled>1</enabled>
-   <default>0</default>
+   <default>1</default>
   </output>
   <output>
    <name>Custom</name>
@@ -39,7 +39,7 @@
   </output>
   <output>
    <name>JS</name>
-   <enabled>1</enabled>
+   <enabled>0</enabled>
    <default>0</default>
    <hash>c859b54dfaa4fe4e91c1d7f4300f0f058c58a61b</hash>
   </output>

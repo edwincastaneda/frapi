@@ -3,23 +3,23 @@
  <configurations>
   <configuration>
    <key>db_hostname</key>
-   <value>localhost</value>
+   <value>172.22.18.14</value>
   </configuration>
   <configuration>
    <key>db_username</key>
-   <value>root</value>
+   <value>dbmercuser</value>
   </configuration>
   <configuration>
    <key>db_password</key>
-   <value>password</value>
+   <value>Xg.DavbqT4kYOh3nNFBk</value>
   </configuration>
   <configuration>
    <key>db_database</key>
-   <value>example</value>
+   <value>lealtad</value>
   </configuration>
   <configuration>
    <key>api_url</key>
-   <value>api.frapi</value>
+   <value>api.tarjetalibre.com.gt</value>
   </configuration>
   <configuration>
    <key>cache</key>
@@ -28,7 +28,7 @@
   <configuration>
    <key>use_cdata</key>
    <hash>d36820838f92275c856b7cab1c5563976fb72c72</hash>
-   <value>1</value>
+   <value>0</value>
   </configuration>
   <configuration>
    <key>allow_cross_domain</key>
@@ -39,6 +39,11 @@
    <key>db_engine</key>
    <value>mysql</value>
    <hash>9dcf333a185b1744f0ba4176a47cdf0e1b9b8873</hash>
+  </configuration>
+  <configuration>
+   <key>locale</key>
+   <value>en</value>
+   <hash>6f8a5f3440f574f203333f289254e27dabb1b5cc</hash>
   </configuration>
  </configurations>
 </frapi-config>

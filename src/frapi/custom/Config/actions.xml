@@ -2,93 +2,114 @@
 <frapi-config>
  <actions>
   <action>
-   <name>Collection</name>
-   <enabled>1</enabled>
-   <public>1</public>
-   <description>This is an example of a collection. A collection is a bucket of resources. In this case, you can only POST and DELETE this collection.&#13;
-&#13;
-POST: A post will add a new resource to a collection. You have to pass a &quot;name&quot; parameter.&#13;
-&#13;
-DELETE: Delete collection will remove the collection of resources from the system.&#13;
-&#13;
-Try it with &quot;curl -X POST http://api.frapi/collection -d '{&quot;name&quot;:&quot;new&quot;}' -H 'Content-Type: application/json'&#13;
-&#13;
-</description>
-   <route>/collection</route>
-   <hash>a0caa1c9f6c5ba636005b312918e7ce6acf70ccb</hash>
-   <parameters>
-    <parameter>
-     <name>name</name>
-     <required>0</required>
-    </parameter>
-   </parameters>
-  </action>
-  <action>
-   <name>Resource</name>
-   <enabled>1</enabled>
-   <public>1</public>
-   <description>This is the resource contained in a certain collection group. &#13;
-&#13;
-PUT: A put with the &quot;name&quot; parameter will update the name of the resource&#13;
-&#13;
-DELETE: Deletes the resource.&#13;
-&#13;
-GET: This retrieves the information relative to the resource contained in the collection</description>
-   <route>/collection/:resource</route>
-   <hash>3ecc1f98f5c2292d41150143083df87ea81dca08</hash>
-   <parameters>
-    <parameter>
-     <name>name</name>
-     <required>0</required>
-    </parameter>
-   </parameters>
-  </action>
-  <action>
-   <name>Siblings</name>
-   <enabled>1</enabled>
-   <public>1</public>
-   <description>This is a collection of sibling for a resource. This only accepts POST, DELETE, GET and HEAD. &#13;
-&#13;
-POST: A post will add a new sibling using the name parameter&#13;
-&#13;
-DELETE: This deletes the siblings connections, it removes all siblings in the collection&#13;
-&#13;
-GET: Retrieve a list of siblings and the relative information.&#13;
-&#13;
-HEAD: Fetch the meta information for the siblings.</description>
-   <route>/collection/:resource/siblings</route>
-   <hash>2f4d1cefc3bbb184dda9da882fac349558b8bb70</hash>
-   <parameters>
-    <parameter>
-     <name>name</name>
-     <required>0</required>
-    </parameter>
-   </parameters>
-  </action>
-  <action>
-   <name>Sibling</name>
-   <enabled>1</enabled>
-   <public>1</public>
-   <description>This is used to execute operations on a sibling resource. &#13;
-&#13;
-GET: Retrieve the information relative to a sibling&#13;
-&#13;
-DELETE: Remove a sibling for this resource&#13;
-&#13;
-HEAD: Retrieve the meta information relative to a sibling.&#13;
-&#13;
-</description>
-   <route>/collection/:resource/siblings/:sibling</route>
-   <hash>836d88aacf5906048737893dd4dc0469e353dc33</hash>
-  </action>
-  <action>
    <name>Introduction</name>
    <enabled>1</enabled>
-   <public>1</public>
-   <description></description>
+   <public>0</public>
    <route>/</route>
+   <hash>2bad3e1039fed404e6e68b397c0ea28d6022caeb</hash>
+   <description>Documentación del apiREST de Tarjeta Libre</description>
    <parameters></parameters>
+  </action>
+  <action>
+   <name>Establecimientos</name>
+   <enabled>1</enabled>
+   <public>0</public>
+   <route>/establecimientos</route>
    <hash>29e39f311db4ca2ef7dacf8d8c493ef69aa29b61</hash>
+   <description>GET&#13;
+Devuelve datos de establecimientos. Puede ser filtrado por el parametro id o tipo.&#13;
+&#13;
+RESULTADO&#13;
+[ESTABLECIMIENTO_ID]&#13;
+[NOMBRE]&#13;
+[IMAGEN]&#13;
+[NO_PROMOCIONES]&#13;
+&#13;
+PARAMETROS&#13;
+id: filtra por un solo establecimiento.&#13;
+tipo: categoria del establecimiento.&#13;
+&#13;
+EJEMPLO DE USO&#13;
+{API_URL}/establecimientos.json&#13;
+{API_URL}/establecimientos.json?id=#&#13;
+{API_URL}/establecimientos.json?tipo=#</description>
+   <parameters>
+    <parameter>
+     <name>id</name>
+     <required>0</required>
+    </parameter>
+    <parameter>
+     <name>tipo</name>
+     <required>0</required>
+    </parameter>
+   </parameters>
+  </action>
+  <action>
+   <name>Promociones</name>
+   <enabled>1</enabled>
+   <public>0</public>
+   <route>/promociones</route>
+   <hash>f012379ca7afc94258e9c692fcd13da6b51c4ce8</hash>
+   <description>GET&#13;
+Devuelve las promociones de un establecimiento especificado por el id.&#13;
+&#13;
+RESULTADO&#13;
+[PROMOCION_ID]&#13;
+[DESCRIPCION]&#13;
+[AHORRO]&#13;
+[RATING]&#13;
+[NO_COMENTARIOS]&#13;
+&#13;
+PARAMETROS&#13;
+establecimiento_id: establecimiento al cual se quiere mostrar lass promociones.&#13;
+&#13;
+&#13;
+EJEMPLO DE USO&#13;
+{API_URL}/promociones.json?establecimiento_id=#</description>
+   <parameters>
+    <parameter>
+     <name>establecimiento_id</name>
+     <required>1</required>
+    </parameter>
+   </parameters>
+  </action>
+  <action>
+   <name>Comentarios</name>
+   <enabled>1</enabled>
+   <public>0</public>
+   <route>/comentarios</route>
+   <hash>d4f731567265c6bfa364275e0763d2bd48beff06</hash>
+   <description>GET&#13;
+Devuelve los comentarios de una promocion o actividad especificada.&#13;
+&#13;
+RESULTADO&#13;
+[USUARIO]&#13;
+[PUNTEO]&#13;
+[COMENTARIO]&#13;
+[FECHA_COMENTARIO]&#13;
+&#13;
+PARAMETROS&#13;
+tipo: indica si es promocion o actividad&#13;
+id: identificador de promocion o actividad&#13;
+limite: limita la cantidad limite a mostrar (si no se especifica se muestran todos)&#13;
+&#13;
+EJEMPLO DE USO&#13;
+{API_URL}/comentarios.json?tipo=#?id=#&#13;
+{API_URL}/comentarios.json?tipo=#?id=#?limit=#</description>
+   <parameters>
+    <parameter>
+     <name>id</name>
+     <required>1</required>
+    </parameter>
+    <parameter>
+     <name>tipo</name>
+     <required>1</required>
+    </parameter>
+    <parameter>
+     <name>limite</name>
+     <required>0</required>
+    </parameter>
+   </parameters>
   </action>
  </actions>
 </frapi-config>

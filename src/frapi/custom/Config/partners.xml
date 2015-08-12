@@ -2,12 +2,12 @@
 <frapi-config>
  <partners>
   <partner>
-   <firstname>test</firstname>
-   <lastname>test</lastname>
-   <email>test</email>
-   <company>test</company>
-   <api_key>34c285b25ac62f9472265d1e41f8a77f5d2382f6</api_key>
-   <hash>e326a4351d1fc4399b68eba62f15a52a7335b7a0</hash>
+   <firstname>Front</firstname>
+   <lastname>Office</lastname>
+   <email>frontoffice</email>
+   <company>Prensa Libre</company>
+   <api_key>c45062ba61b95fbdc74eb3b7d6404997bd25ba87</api_key>
+   <hash>cb7d7deb33e1a32be5b53aa46d68cb3a574d29bb</hash>
   </partner>
  </partners>
 </frapi-config>
